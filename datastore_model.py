@@ -20,7 +20,7 @@ class User(db.Model):
 	user_name = db.StringProperty()
 	password_MD5ed = db.StringProperty()
 	groups = db.ListProperty(db.Key)
-	is_theacher_of = db.ListProperty(db.Key)
+	is_teacher_of = db.ListProperty(db.Key)
 	is_administrator = db.BooleanProperty(default = False)
 
 

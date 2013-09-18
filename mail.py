@@ -18,6 +18,42 @@ def abort_if_entity_not_exists(kind, entity_id):
 	else:		
 		abort(404, message="The identifier for the resource " + kind + " is not valid")
 		
+#This class populates the datastore with some data for testing. Groups and users
+class Populate(Resource):
+	def get(self):
+		sitewide = Group(group_name="sitewide", is_classroom=False)
+		sitewide.put()
+
+		hackers = Group(group_name="hackers hut", is_classroom=True)
+		hackers.put()
+
+		linux = Group(group_name="linux", is_classroom=False)
+		linux.put()
+
+		mac = Group(group_name="mac lovers", is_classroom=False)
+		mac.put()
+
+		cars = Group(group_name="self driving cars", is_classroom=True)
+		cars.put()
+
+		daniel = User(user_name="daniel", is_administrator=True, groups=[linux.key(),hackers.key(),cars.key()], is_teacher_of=[hackers.key()])
+		daniel.put()
+
+		david = User(user_name="david")
+		david.groups=[hackers.key(),mac.key()]
+		david.put()
+
+		james = User(user_name="james")
+		james.groups=[linux.key(),cars.key()]
+		james.is_teacher_of=[cars.key()]
+		james.put()
+
+		laura = User(user_name="laura")
+		laura.groups=[mac.key()]
+		laura.put()
+
+api.add_resource(Populate, '/populate')	
+
 
 class AutocompleteAPI(Resource):
 
