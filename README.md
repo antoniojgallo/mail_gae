@@ -119,7 +119,8 @@ You should get something like this
     "date_sent": "2013-09-18T01:35:40.602531",
     "subject": "This is the last message with content",
     "content": "This is the content"
-}```
+}
+```
 
 ###Delete a message
 To delete a message, make a DELETE request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mail/<int:message_id>]
