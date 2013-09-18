@@ -1,0 +1,10 @@
+application:  secret-walker-332
+version: 4
+runtime: python27
+api_version: 1
+
+handlers:
+- url: .*
+  script: main.app
+
+threadsafe: yes

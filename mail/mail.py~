@@ -1,0 +1,31 @@
+from flask import Flask
+from flask.ext.restful import Api, Resource
+from flask.ext.restful import reqparse
+
+app = Flask(__name__)
+api = Api(app)
+
+class inboxAPI(Resource):
+	def get(self, user_id):
+		return jsonify( { 'task': 'hola' } )
+
+api.add_resource(UserAPI, '/users/<int:user_id>/mails/', endpoint = 'inbox')
+
+
+class messageAPI(Resource):
+
+	def get(self, user_id, message_id):
+		pass
+
+	def delete(self, user_id, message_id):
+		pass
+
+api.add_resource(UserAPI, '/users/<int:user_id>/mails/<int:message_id>', endpoint = 'message')
+
+
+class mailAPI(Resource):
+
+	def post(self, user_id):
+		pass
+
+api.add_resource(UserAPI, '/users/<int:user_id>/mails', endpoint = 'mail')

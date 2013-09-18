@@ -1,0 +1,61 @@
+
+ENVIAR EMAILS
+
+
+/users/<int:user_id>/mails
+
+USER
+{
+"subject":"This an individual message to david",
+"content":"This is an email",
+"recipient_id" : "5979693987659776"
+}
+
+enviar un email a un usuario que no existe
+
+enviar un email con los datos del json mal
+
+enviar un email a un grupo
+
+GROUP
+{
+"subject":"This is a group message to computer science",
+"content":"This is an email",
+"group_id" : "6261168964370432"
+}
+
+SITEWIDE
+{
+"subject":"This is a sitewide message",
+"content":"This is an email",
+"group_id" : "4853794080817152"
+}
+
+enviar un email a un grupo del que no se tiene permiso
+
+enviar un email sitewide siendo administrador
+
+enviar un email sitewide sin ser el administrador
+
+enviar un email a una clase de la que se es profesor
+
+enviar un email a una clase de la que no se es profesor
+
+enviar un email a un grupo que no existe
+
+OBTENER & borrar UN EMAIL 
+
+/users/<int:user_id>/mail/<int:message_id>
+
+/users/5979693987659776/mail/5664134150488064 
+
+
+OBTENER INBOX
+
+/users/<int:user_id>/mailos?offset=<int:offset>&size=<int:size>
+
+
+AUTOCOMPLETE
+
+
+
