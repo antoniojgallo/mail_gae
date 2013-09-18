@@ -52,6 +52,8 @@ class Populate(Resource):
 		laura.groups=[mac.key()]
 		laura.put()
 
+		return {'result': True }
+
 api.add_resource(Populate, '/populate')	
 
 
