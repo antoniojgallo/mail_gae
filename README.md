@@ -26,10 +26,10 @@ My app engine instance is called `secret-walker-332` (I promise Google offered m
 
 To send mails, make a POST request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mail]
 
-*`<int:user_id>` is the unique int value associated with the user that sends the email. It should be valid
-*You can send mails to users or groups, but not both at the same time
-*The body of the `content` cannot be an empty string
-*The `subject` size cannot be larger than 100 characters
+* `<int:user_id>` is the unique int value associated with the user that sends the email. It should be valid
+* You can send mails to users or groups, but not both at the same time
+* The body of the `content` cannot be an empty string
+* The `subject` size cannot be larger than 100 characters
 
 
 ####If you are sending mails to another user
@@ -58,16 +58,16 @@ The body of the request must be a json like this
 
 `group_id` must be a valid user id recipient for your mail. 
 
-*If `group_id` is the id of a "regular" group (not class or systemwide), it will be sent only if your user has the group on its `groups` list
-*If `group_id` is the id of the systemwide group, it will be sent only if your user has `is_administrator` flag as `True`
-*If `group_id` is the id of a class group, it will be sent only if your user has the class on its `is_teacher_of` list
+* If `group_id` is the id of a "regular" group (not class or systemwide), it will be sent only if your user has the group on its `groups` list
+* If `group_id` is the id of the systemwide group, it will be sent only if your user has `is_administrator` flag as `True`
+* If `group_id` is the id of a class group, it will be sent only if your user has the class on its `is_teacher_of` list
 
 ###Check your inbox
 To check your inbox, make a GET request to [http://secret-walker-332.appspot.com/users/<int:user_id>/inbox?size=INT&offset=INT]
 
-*`<int:user_id>` is the unique int value associated with the user that request the inbox. It should be valid
-*`size` is the number of messages you want to get (starting from the newer ones). It is limited at 1000 messages
-*`offset` is the number of messages you want to skip (starting from the newer ones)
+* `<int:user_id>` is the unique int value associated with the user that request the inbox. It should be valid
+* `size` is the number of messages you want to get (starting from the newer ones). It is limited at 1000 messages
+* `offset` is the number of messages you want to skip (starting from the newer ones)
 
 
 You should get a JSON like this:
@@ -131,7 +131,7 @@ The message is deleted from the user inbox. If the only user that has that messa
 be deleted, the message is actually deleted. (That is, if it is a user to user message, or if the user is the only one that hasn't deleted
 a group or sitewide message yet)
 
-*`<int:user_id>` is the unique int value associated with the user that request the inbox. It should be valid and it should be a the recipient of `<int:message_id>`. Remember that there could be multiple recipients per message (group messages)
+* `<int:user_id>` is the unique int value associated with the user that request the inbox. It should be valid and it should be a the recipient of `<int:message_id>`. Remember that there could be multiple recipients per message (group messages)
 
 You should get something like this
 
@@ -147,7 +147,7 @@ The implementation is a little bit tricky. Take a look at it if you are curious
 
 To use it, make a GET request to [http://secret-walker-332.appspot.com/autocomplete?hint=STR]
 
-*STR are the first characters of the user you are typing. It can be one character, two...
+* STR are the first characters of the user you are typing. It can be one character, two...
 
 You should get something like this (being `STR=da` and the users shown, the only ones that whose prefix is `da`)
 
@@ -175,24 +175,24 @@ Just remember when you put some JSON on the body of the call, to check the "appl
 
 ###Users
 
-*Daniel (username="daniel", user_id="123") is the system administrator of the site. He is also part of the "linux" group, and is teacher of "hackers hut" He takes lectures of "self driving cars"
-*David (username="david", user_id="1234") is a student of "hackers hut". He is member of "mac lovers"
-*James (username="james", user_id="1234") is a member of "linux" and teacher of "self driving cars"
-*Laura (username="laura", user_id="1234") is a member of "mac lovers"
+* Daniel (username="daniel", user_id="123") is the system administrator of the site. He is also part of the "linux" group, and is teacher of "hackers hut" He takes lectures of "self driving cars"
+* David (username="david", user_id="1234") is a student of "hackers hut". He is member of "mac lovers"
+* James (username="james", user_id="1234") is a member of "linux" and teacher of "self driving cars"
+* Laura (username="laura", user_id="1234") is a member of "mac lovers"
 
 
 ###Groups
 
-*"sitewide" (group_name="sitewide", group_id="123") is the group all users are part of
-*"hackers hut" (group_name="hackers hut", group_id="123") is a class
-*"linux" (group_name="linux", group_id="123") is a group
-*"mac lovers" (group_name="mac lovers", group_id="123") is a group
-*"self driving cars"(group_name="self driving cars", group_id="123") is a class
+* "sitewide" (group_name="sitewide", group_id="123") is the group all users are part of
+* "hackers hut" (group_name="hackers hut", group_id="123") is a class
+* "linux" (group_name="linux", group_id="123") is a group
+* "mac lovers" (group_name="mac lovers", group_id="123") is a group
+* "self driving cars"(group_name="self driving cars", group_id="123") is a class
 
 ##Files
-*`datastore_model.py` is the datastore model for the app
-*`app.yaml` is the information needed by GAE
-*`mail.py` is where almost all the application logic is
-*`main.py` its only job is mostly to call `mail.py`
-*`mail_unit_test.py` is where the tests live
-*I think that all the other things out there are mainly dependencies
+* `datastore_model.py` is the datastore model for the app
+* `app.yaml` is the information needed by GAE
+* `mail.py` is where almost all the application logic is
+* `main.py` its only job is mostly to call `mail.py`
+* `mail_unit_test.py` is where the tests live
+* I think that all the other things out there are mainly dependencies
