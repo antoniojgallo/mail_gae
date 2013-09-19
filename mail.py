@@ -107,14 +107,20 @@ class InboxAPI(Resource):
 
 		parser = reqparse.RequestParser()
 
-		parser.add_argument('offset', type = int, required = True, help = 'No offset provided', location='args')
-		parser.add_argument('size', type = int, required = True, help = 'No size provided', location='args')
+		parser.add_argument('offset', type = int, help = 'No offset provided', location='args')
+		parser.add_argument('size', type = int, help = 'No size provided', location='args')
 
 		args = parser.parse_args()
 
-		arg_offset = args['offset']
+		if (args['offset'] is None):
+			arg_offset = 0
+		else:	
+			arg_offset = args['offset']
 
-		size = args['size']
+		if (args['size'] is None):
+			size=10
+		else:
+			size = args['size']
 
 		user = abort_if_entity_not_exists('User', user_id)
 
@@ -142,7 +148,7 @@ class InboxAPI(Resource):
 
 			
 
-api.add_resource(InboxAPI, '/users/<int:user_id>/inbox')
+api.add_resource(InboxAPI, '/users/<int:user_id>/mails')
 
 
 
@@ -222,7 +228,7 @@ class MessageAPI(Resource):
 		else:
 			abort(403, message="The combination of user and message is not valid")
 
-api.add_resource(MessageAPI, '/users/<int:user_id>/mail/<int:message_id>', endpoint = 'message')
+api.add_resource(MessageAPI, '/users/<int:user_id>/mails/<int:message_id>', endpoint = 'message')
 
 
 #Sends a new message, to a user or a group THE CONTENT CANNOT BE AN EMPTY STRING. check also
@@ -273,7 +279,8 @@ class SendMailAPI(Resource):
 			#Only teachers of a classroom are allowed to send classroom wide messages to their clasrooms
 				(( (group.is_classroom) and (group.key() in user.is_teacher_of) ) and (group.key() in user.groups) )or
 			#Only users who are member of a group are allowed to send messages to that group
-				((group.key() in user.groups) and not group.is_classroom) ):
+				((group.key() in user.groups) and not group.is_classroom) ) or user.is_administrator:
+			#I know that was dirty...
 				#put the message on the system
 				message.group=group
 				message.put()
@@ -297,7 +304,7 @@ class SendMailAPI(Resource):
 		return {'result': True }		
 			
 
-api.add_resource(SendMailAPI, '/users/<int:user_id>/mail')
+api.add_resource(SendMailAPI, '/users/<int:user_id>/mails')
 
 
 

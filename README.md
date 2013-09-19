@@ -24,7 +24,7 @@ My app engine instance is called `secret-walker-332` (I promise Google offered m
 
 ###Send mails
 
-To send mails, make a POST request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mail]
+To send mails, make a POST request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mails]
 
 * `<int:user_id>` is the unique int value associated with the user that sends the email. It should be valid
 * You can send mails to users or groups, but not both at the same time
@@ -61,13 +61,14 @@ The body of the request must be a json like this
 * If `group_id` is the id of a "regular" group (not class or systemwide), it will be sent only if your user has the group on its `groups` list
 * If `group_id` is the id of the systemwide group, it will be sent only if your user has `is_administrator` flag as `True`
 * If `group_id` is the id of a class group, it will be sent only if your user has the class on its `is_teacher_of` list
+* The administrator can send messages to any group regardless of his mermbership
 
 ###Check your inbox
-To check your inbox, make a GET request to [http://secret-walker-332.appspot.com/users/<int:user_id>/inbox?size=INT&offset=INT]
+To check your inbox, make a GET request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mails?size=INT&offset=INT]
 
 * `<int:user_id>` is the unique int value associated with the user that request the inbox. It should be valid
-* `size` is the number of messages you want to get (starting from the newer ones). It is limited at 1000 messages
-* `offset` is the number of messages you want to skip (starting from the newer ones)
+* `size` is the number of messages you want to get (starting from the newer ones). It is limited at 1000 messages. By default is 10
+* `offset` is the number of messages you want to skip (starting from the newer ones). By default is 0
 
 
 You should get a JSON like this:
@@ -106,7 +107,7 @@ This JSON should be self-explanatory. It shows a preview of every message in the
 
 
 ###Get a message
-To get a message, make a GET request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mail/<int:message_id>]
+To get a message, make a GET request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mails/<int:message_id>]
 You can learn the id of the message from the inbox.
 Once you request a message, it is automatically tagged as read
 
@@ -123,7 +124,7 @@ You should get something like this
 ```
 
 ###Delete a message
-To delete a message, make a DELETE request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mail/<int:message_id>]
+To delete a message, make a DELETE request to [http://secret-walker-332.appspot.com/users/<int:user_id>/mails/<int:message_id>]
 
 You can learn the id of the message from the inbox.
 
