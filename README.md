@@ -172,7 +172,8 @@ You should get something like this (being `STR=da` and the users shown, the only
 I have created some users, groups and messages to let you play with the system that I have online at [http://secret-walker-332.appspot.com]
 
 To make the API calls you can use `curl`. But I recommend [Rest console](https://chrome.google.com/webstore/detail/rest-console/cokgbflfommojglbmbpenpphppikmonn?hl=en) to try de application for a `man`-free experience (with `man` I mean the command, not anything related to gender)
-Just remember when you put some JSON on the body of the call, to check the "application/json" box
+* Remember when you put some JSON on the body of the call, to check the "application/json" box
+* If your request does not need JSON, deselect the "Raw Body" checkbox near your old JSON
 
 ###Users
 

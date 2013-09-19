@@ -218,10 +218,9 @@ class MessageAPI(Resource):
 
 			if ( (message.group is None) or not hasattr(message, 'group')) or unique:
 				message.delete()
-
+			
 			#And then I delete the preview from the inbox (For all cases)
 			message_inbox.delete()
-
 			return {'result': True }
 
 
