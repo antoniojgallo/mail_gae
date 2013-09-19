@@ -60,7 +60,7 @@ api.add_resource(Populate, '/populate')
 class AutocompleteAPI(Resource):
 
 
-#Autocomplete call. What happens with the upper case characters?
+#Autocomplete call. It is case sensitive
 	def get(self):	
 
 		parser = reqparse.RequestParser()
@@ -191,7 +191,6 @@ class MessageAPI(Resource):
 
 	def delete(self, user_id, message_id):
 
-
 		#Check that the user has that message in his inbox (has permission to see it)
 		inbox_query = db.Query(Inbox).filter('message_id =',  db.Key.from_path('Message', message_id)).filter('recipient =',  db.Key.from_path('User', user_id))
 
@@ -206,12 +205,12 @@ class MessageAPI(Resource):
 
 		  #If it's not a group message, I delete the actual message. If it's a group message, but only
 			#this user has it in the inbox, I delete it as well
-			#Because python has lazy evaluation, there is no penalty in writing both conditions on the same
-			#if
+		
+			size = len(db.Query(Inbox).filter('message_id =',  db.Key.from_path('Message', message_id)).fetch(2))
 
-			if (((message.group is  None) or not hasattr(message, 'group') ) or 
-				(len(db.Query(Inbox).filter('message_id =', message_id).fetch(2)) == 1)):
-					
+			unique = (size == 1)
+
+			if ( (message.group is None) or not hasattr(message, 'group')) or unique:
 				message.delete()
 
 			#And then I delete the preview from the inbox (For all cases)
@@ -270,11 +269,11 @@ class SendMailAPI(Resource):
 		if args['group_id'] is not None:
 			group = abort_if_entity_not_exists('Group',args['group_id'])
 			#Only administrators are allowed to send sitewide messages
-			if ((group.group_name == 'sitewide' and user.is_administrator) or
-				#Only teachers of a classroom are allowed to send classroom wide messages to their clasrooms
-				((group.is_classroom) and (group.key() in user.is_teacher_of)) or
-				#Only users who are member of a group are allowed to send messages to that group
-				(group.key() in user.groups)):
+			if (((group.group_name == 'sitewide') and (user.is_administrator) ) or
+			#Only teachers of a classroom are allowed to send classroom wide messages to their clasrooms
+				(( (group.is_classroom) and (group.key() in user.is_teacher_of) ) and (group.key() in user.groups) )or
+			#Only users who are member of a group are allowed to send messages to that group
+				((group.key() in user.groups) and not group.is_classroom) ):
 				#put the message on the system
 				message.group=group
 				message.put()
